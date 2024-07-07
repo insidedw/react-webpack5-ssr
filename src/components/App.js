@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import './App.css'
 import { Link, Route, Routes } from 'react-router-dom'
+import { Images } from './Images'
 const App = () => {
   return (
     <Routes>
@@ -10,6 +11,9 @@ const App = () => {
           <div>
             <h1>Hello, SSR!</h1>
             <Link to={'/about'}>About</Link>
+            <Suspense fallback={<h3>loading...</h3>}>
+              <Images />
+            </Suspense>
           </div>
         }
       />
