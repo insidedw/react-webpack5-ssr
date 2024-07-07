@@ -1,11 +1,13 @@
 const path = require('path')
-
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin')
 module.exports = {
   mode: 'development',
   entry: './src/client.js',
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: 'client.bundle.js',
+    filename: '[name].[hash].js',
+    clean: true,
   },
   module: {
     rules: [
@@ -18,8 +20,17 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: [MiniCssExtractPlugin.loader, 'css-loader'],
       },
     ],
   },
+  plugins: [
+    new MiniCssExtractPlugin({
+      filename: '[name].[hash].css',
+    }),
+    new WebpackManifestPlugin({
+      fileName: 'manifest.json',
+      publicPath: '/',
+    }),
+  ],
 }
