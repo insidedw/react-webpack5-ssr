@@ -4,6 +4,7 @@ import React from 'react'
 import express from 'express'
 import { renderToString } from 'react-dom/server'
 import App from './components/App'
+import { StaticRouter } from 'react-router-dom/server'
 
 const app = express()
 app.use(express.static('dist'))
@@ -34,7 +35,11 @@ const styles = Object.keys(manifest)
   .join('\n')
 
 app.get('*', (req, res) => {
-  const appString = renderToString(<App />)
+  const appString = renderToString(
+    <StaticRouter location={req.url}>
+      <App />
+    </StaticRouter>,
+  )
 
   return res.send(
     html
