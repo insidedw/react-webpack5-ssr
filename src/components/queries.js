@@ -6,7 +6,7 @@ export const customFetch = async () => {
           id: 'new jeans',
           src: 'https://pbs.twimg.com/media/F04xYoVaYAAmchT.jpg:large',
         }),
-      2000,
+      10000,
     ),
   )
   return await r

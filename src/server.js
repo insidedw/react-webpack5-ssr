@@ -71,7 +71,7 @@ function elementToReadable(element) {
     })
   })
 }
-async function* streamHTML(head, body, footer) {
+async function* streamHTML(head, body, footer, queryClient) {
   yield head
   console.log('[Streaming SSR] head rendered')
   let i = 0
@@ -81,7 +81,9 @@ async function* streamHTML(head, body, footer) {
     console.log(`[Streaming SSR] chunk ${i} rendered`)
   }
 
-  yield footer
+  const dehydratedState = dehydrate(queryClient)
+  const footerWithQueryState = footer.replace('{{INITIAL_STATE}}', `${JSON.stringify(dehydratedState)}`)
+  yield footerWithQueryState
   console.log('[Streaming SSR] footer rendered')
 }
 
@@ -92,8 +94,6 @@ app.get('*', async (req, res) => {
   const queryClient = getQueryClient()
 
   queryClient.prefetchQuery({ queryKey: ['image', '1'], queryFn: () => customFetch() })
-  const dehydratedState = dehydrate(queryClient)
-  const footerWithQueryState = refinedFooter.replace('{{INITIAL_STATE}}', `${JSON.stringify(dehydratedState)}`)
 
   const vnode = (
     <QueryClientProvider client={queryClient}>
@@ -104,7 +104,7 @@ app.get('*', async (req, res) => {
   )
 
   try {
-    const ssrStream = Readable.from(streamHTML(refinedHead, await elementToReadable(vnode), footerWithQueryState))
+    const ssrStream = Readable.from(streamHTML(refinedHead, await elementToReadable(vnode), refinedFooter, queryClient))
     ssrStream.on('error', (error) => {
       console.log(`ssrStream!`, error.message)
     })
