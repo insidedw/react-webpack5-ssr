@@ -7,7 +7,6 @@ import App from './components/App'
 import { StaticRouter } from 'react-router-dom/server'
 import { getQueryClient } from './routes'
 import { dehydrate, QueryClientProvider } from '@tanstack/react-query'
-import { customFetch } from './components/queries'
 import { PassThrough, Readable } from 'stream'
 
 const app = express()
