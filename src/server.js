@@ -93,8 +93,6 @@ app.get('*', async (req, res) => {
 
   const queryClient = getQueryClient()
 
-  queryClient.prefetchQuery({ queryKey: ['image', '1'], queryFn: () => customFetch() })
-
   const vnode = (
     <QueryClientProvider client={queryClient}>
       <StaticRouter location={req.url}>
