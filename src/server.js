@@ -86,7 +86,14 @@ async function* streamHTML(head, body, footer, queryClient) {
   console.log('[Streaming SSR] footer rendered')
 }
 
-app.get('*', async (req, res) => {
+app.get('/api', (req, res) => {
+  res.json({
+    id: 'new jeans',
+    src: 'https://pbs.twimg.com/media/F04xYoVaYAAmchT.jpg:large',
+  })
+})
+
+app.get('/', async (req, res) => {
   res.setHeader('Content-Type', 'text/html')
   res.status(200)
 
