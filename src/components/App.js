@@ -21,7 +21,7 @@ const App = () => {
         path={'/about'}
         element={
           <div>
-            <h1>SSR is sever side rendering</h1>
+            <h1>SSR is sever side rendering..</h1>
             <Link to={'/'}>Home</Link>
           </div>
         }
