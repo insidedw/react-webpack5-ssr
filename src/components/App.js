@@ -11,7 +11,7 @@ const App = () => {
           <div>
             <h1>Hello, SSR!</h1>
             <Link to={'/about'}>About</Link>
-            <Suspense fallback={<h3>loading...</h3>}>
+            <Suspense fallback={<h3>loading...2</h3>}>
               <Images />
             </Suspense>
           </div>
